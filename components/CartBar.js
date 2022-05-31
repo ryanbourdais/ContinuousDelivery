@@ -27,11 +27,13 @@ const total = cart => {
   return cart.map(item => item.cost).reduce((prev, curt) => prev + curt);
 };
 
-const CartBar = ({cart, emptyCart}) => (
+const CartBar = ({cart, emptyCart, makeVisible}) => (
   <Appbar style={styles.bottom}>
     <Appbar.Action
       icon="cart"
-      onPress={() => console.log('Pressed label')}
+      onPress={() => {
+        makeVisible();
+      }}
       style={styles.ButtonContainer}
     />
     <Paragraph style={styles.Price}>${total(cart).toFixed(2)}</Paragraph>
