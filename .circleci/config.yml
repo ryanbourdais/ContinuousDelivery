@@ -45,3 +45,5 @@ workflows:
       - test:
           requires:
           - build
+          paramaters:
+            system-image: [android-28, android-29]
