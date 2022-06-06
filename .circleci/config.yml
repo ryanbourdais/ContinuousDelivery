@@ -1,49 +1,53 @@
-version: 2.1
-
-orbs:
-  android: circleci/android@2.0.3
-
 jobs:
-  build:
-    docker:
-      - image: cimg/android:2022.04
+  analyse_js:
+    executor: rn/linux_js
     steps:
-      - checkout 
-      - run: echo "hello world"
-  test:
-    docker:
-      - image: cimg/android:2022.04
-      - image: cimg/android:2022.01
-      - image: cimg/android:2021.12
-      - image: cimg/android:2021.08
-    parallelism: 4
+      - attach_workspace:
+          at: .
+      - rn/yarn_install
+      - run:
+          command: yarn eslint
+          name: Run ESLint
+      - run:
+          command: yarn flow
+          name: Flow
+      - run:
+          command: yarn jest
+          name: Jest
+  checkout_code:
+    executor: rn/linux_js
     steps:
       - checkout
-      - run: echo "begin testing"
-      - android/create-avd:
-          avd-name: myavd
-          install: true
-          system-image: system-images;android-29;default;x86
-      - android/start-emulator:
-          avd-name: myavd
-          no-window: true
-          restore-gradle-cache-prefix: v1a
-      - android/run-tests
-      - android/save-gradle-cache:
-          cache-prefix: v1a
-      # - android/run-ui-tests:
-      #     matrix:
-      #       parameters:
-      #         system-image:
-      #           - system-images;android-28;default;x86
-      #           - system-images;android-29;default;x86
-      #     name: ui-tests-<<matrix.system-image>>
-
-
+      - persist_to_workspace:
+          paths:
+            - ./
+          root: ./
+  fastlane_release:
+    executor: rn/linux_js
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/yarn_install
+      - run:
+          command: bundle exec fastlane android release
+          name: Run Fastlane
+orbs:
+  rn: react-native-community/react-native@1.0.0
+version: 2.1
 workflows:
-  build-workflow:
+  test:
     jobs:
-      - build
-      - test:
+      - checkout_code
+      - analyse_js:
           requires:
-          - build
+            - checkout_code
+      - rn/android_build:
+          build_type: release
+          requires:
+            - analyse_js
+      - rn/android_test:
+          requires:
+            - rn/android_build
+      - fastlane_release:
+          requires:
+            - rn/android_test
