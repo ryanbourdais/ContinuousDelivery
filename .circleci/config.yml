@@ -4,6 +4,11 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run:
+          cd ~
+          curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
+          sudo bash nodesource_setup.sh
+          sudo apt install nodejs
       - rn/yarn_install
       - run:
           command: yarn eslint
