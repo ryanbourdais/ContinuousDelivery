@@ -10,8 +10,6 @@ jobs:
     steps:
       - checkout 
       - run: echo "hello world"
-    requires:
-      - test
   test:
     docker:
       - image: cimg/android:2022.04
@@ -45,5 +43,7 @@ jobs:
 workflows:
   build-workflow:
     jobs:
-      - test
       - build
+      - test:
+          requires:
+          - build
