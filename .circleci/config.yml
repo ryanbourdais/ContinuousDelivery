@@ -9,9 +9,6 @@ jobs:
       - run: sudo bash nodesource_setup.sh
       - run: sudo apt install nodejs
       - run: node -v
-      - run: npm install n
-      - run: n lts
-      - run: n prune
       - rn/yarn_install
       - run:
           command: yarn eslint
