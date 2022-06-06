@@ -11,12 +11,10 @@ jobs:
       - checkout 
       - run: echo "hello world"
   test:
-    docker:
-      - image: cimg/android:2022.04
-      - image: cimg/android:2022.01
-      - image: cimg/android:2021.12
-      - image: cimg/android:2021.08
-    parallelism: 4
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2021.10.1
     steps:
       - checkout
       - run: echo "begin testing"
