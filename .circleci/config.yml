@@ -10,12 +10,15 @@ jobs:
     steps:
       - checkout 
       - run: echo "hello world"
+    requires:
+      - test
   test:
     docker:
       - image: cimg/android:2022.04
-      # - image: cimg/android:2022.01
-      # - image: cimg/android:2021.12
-      # - image: cimg/android:2021.08
+      - image: cimg/android:2022.01
+      - image: cimg/android:2021.12
+      - image: cimg/android:2021.08
+    parallelism: 4
     steps:
       - checkout
       - run: echo "begin testing"
@@ -42,5 +45,5 @@ jobs:
 workflows:
   build-workflow:
     jobs:
-      - build
       - test
+      - build
