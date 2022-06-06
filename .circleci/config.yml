@@ -55,7 +55,7 @@ jobs:
       - node/install:
           install-yarn: false
           node-version: '16.13'
-      - run: sudo npm install -g @react-native-community
+      - run: npm install @react-native-community
       - android/create-avd:
           avd-name: myavd
           install: true
