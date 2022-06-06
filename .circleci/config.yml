@@ -12,7 +12,7 @@ jobs:
       - run: echo "hello world"
   test:
     machine:
-      image: cimg/android:2022.04
+      image: ubuntu-2004:202010-01
         # - image: cimg/android:2022.01
         # - image: cimg/android:2021.12
         # - image: cimg/android:2021.08
