@@ -29,8 +29,6 @@ jobs:
       - android/run-tests
       - android/save-gradle-cache:
           cache-prefix: v1a
-      - android/run-ui-tests:
-          system-image: system-images;android-28;default;x86
 
 
 workflows:
