@@ -30,13 +30,13 @@ jobs:
       - android/run-tests
       - android/save-gradle-cache:
           cache-prefix: v1a
-      - android/run-ui-tests:
-          matrix:
-            parameters:
-              system-image:
-                - system-images;android-28;default;x86
-                - system-images;android-29;default;x86
-          name: ui-tests-<<matrix.system-image>>
+      # - android/run-ui-tests:
+      #     matrix:
+      #       parameters:
+      #         system-image:
+      #           - system-images;android-28;default;x86
+      #           - system-images;android-29;default;x86
+      #     name: ui-tests-<<matrix.system-image>>
 
 
 workflows:
