@@ -13,9 +13,9 @@ jobs:
   test:
     docker:
       - image: cimg/android:2022.04
-      - image: cimg/android:2022.01
-      - image: cimg/android:2021.12
-      - image: cimg/android:2021.08
+      # - image: cimg/android:2022.01
+      # - image: cimg/android:2021.12
+      # - image: cimg/android:2021.08
     steps:
       - checkout
       - run: echo "begin testing"
