@@ -10,14 +10,8 @@ jobs:
       tag: 2021.10.1
     steps:
       - checkout
-      - node/install:
-          install-yarn: false
-          node-version: '16.13'
-      # - android/create-avd:
-      #     avd-name: myavd
-      #     install: true
       - run: ./gradlew build
-      - run: gradlew tasks
+      - run: ./gradlew tasks
       - android/start-emulator-and-run-tests:
           system-image: system-images;android-28;default;x86
           avd-name: myavd
