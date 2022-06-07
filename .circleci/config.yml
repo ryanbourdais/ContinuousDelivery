@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   android: circleci/android@2.0.3
-  node: circleci/node@5.0.2
 jobs:
   test:
     executor:
@@ -10,6 +9,8 @@ jobs:
       tag: 2021.10.1
     steps:
       - checkout
+      - run: ./gradlew build
+      - run: ./gradlew tasks
       - run: ./gradlew androidDependencies
       - run: ./gradlew lint test
       # - android/start-emulator-and-run-tests:
