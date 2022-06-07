@@ -13,11 +13,12 @@ jobs:
       - node/install:
           install-yarn: false
           node-version: '16.13'
-      - android/create-avd:
-          avd-name: myavd
-          install: true
-          system-image: system-images;android-28;default;x86
+      # - android/create-avd:
+      #     avd-name: myavd
+      #     install: true
+          
       - android/start-emulator-and-run-tests:
+          system-image: system-images;android-28;default;x86
           avd-name: myavd
           no-window: true
           restore-gradle-cache-prefix: v1a
