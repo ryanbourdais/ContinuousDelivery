@@ -18,7 +18,6 @@ jobs:
           install: true
           system-image: system-images;android-28;default;x86
       - android/start-emulator-and-run-tests:
-          system-image: system-images;android-29;default;x86
           avd-name: myavd
           no-window: true
           restore-gradle-cache-prefix: v1a
