@@ -1,14 +1,31 @@
 version: 2.1
-
+orbs:
+  android: circleci/android@2.0.3
+  node: circleci/node@5.0.2
 jobs:
-  build:
-    docker:
-      - image: cimg/base:2022.03 
+  test:
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2021.10.1
     steps:
-      - checkout 
-      - run: echo "hello world"
-
+      - checkout
+      - node/install:
+          install-yarn: false
+          node-version: '16.13'
+      - run: npm install -g @react-native-community/cli-platform-android
+      - android/create-avd:
+          avd-name: myavd
+          install: true
+          system-image: system-images;android-28;default;x86
+      - android/start-emulator:
+          avd-name: myavd
+          no-window: true
+          restore-gradle-cache-prefix: v1a
+      - android/run-tests
+      - android/save-gradle-cache:
+          cache-prefix: v1a
 workflows:
-  build-workflow:
+  test:
     jobs:
-      - build
+      - test
