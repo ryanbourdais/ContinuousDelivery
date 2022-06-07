@@ -8,19 +8,24 @@ jobs:
       name: android/android-machine
       resource-class: large
       tag: 2021.10.1
+    build:
+      docker:
+      - image: cimg/android:2022.04
     steps:
       - checkout
       - run: ./gradlew build
       - run: ./gradlew tasks
-      - android/start-emulator-and-run-tests:
-          system-image: system-images;android-28;default;x86
-          avd-name: myavd
-          no-window: true
-          restore-gradle-cache-prefix: v1a
-          post-emulator-launch-assemble-command: echo "built"
-      - android/run-tests
-      - android/save-gradle-cache:
-          cache-prefix: v1a
+      - run: ./gradlew androidDependencies
+      - run: ./gradlew lint test
+      # - android/start-emulator-and-run-tests:
+      #     system-image: system-images;android-28;default;x86
+      #     avd-name: myavd
+      #     no-window: true
+      #     restore-gradle-cache-prefix: v1a
+      #     post-emulator-launch-assemble-command: echo "built"
+      # - android/run-tests
+      # - android/save-gradle-cache:
+          # cache-prefix: v1a
 workflows:
   test:
     jobs:
