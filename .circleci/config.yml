@@ -10,7 +10,6 @@ jobs:
       tag: 2021.10.1
     steps:
       - checkout
-      - run: ./gradlew build
       - run: ./gradlew tasks
       - run: ./gradlew androidDependencies
       - run: ./gradlew lint test
